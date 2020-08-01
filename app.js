@@ -1,7 +1,8 @@
-//import express from 'express';
-const config = require('../../config.js');
+const {getImagesFromInstagram} = require('./BackEnd/Controllers/instagram-endpoints');
+const config = require('./config.js');
 const port = config.port;
 
+// import express from 'express';
 const express = require('express');
 const bodyParser = require('body-parser');
 const url = require('url');
@@ -41,7 +42,10 @@ app.get('/insta/:account_name', (req, res) => {
     // get instagram account name
     const account_name = req.params.account_name;
     // create another function to perform a GET request to instagram's APIs - in another file?
-    return res.send('GET a certain instagram account\n');
+    return getImagesFromInstagram(account_name).then((results) => {
+        console.log("made it to results!");
+        return res.send('GET a certain instagram account\n');
+    })
 });
 
 app.get('/insta/me', (req, res) => {
