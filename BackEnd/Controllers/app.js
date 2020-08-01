@@ -33,22 +33,47 @@ app.put('/', (req, res) => {
 app.delete('/', (req, res) => {
     return res.send('Received a DELETE HTTP method\n');
 });
-   
-app.listen(port, () =>
-console.log(`Example app listening on port ${port}!`),
-);
 
 /**
  * INSTAGRAM ENDPOINTS
  */
+app.get('/insta/:account_name', (req, res) => {
+    // get instagram account name
+    const account_name = req.params.account_name;
+    // create another function to perform a GET request to instagram's APIs - in another file?
+    return res.send('GET a certain instagram account\n');
+});
+
+app.get('/insta/me', (req, res) => {
+    // the user wants to use their own pics
+    // perform db query to get the user's instagram account
+    // perform a GET request to instragram's APIs - in another file?
+    return res.send('GET my own instagram account\n');
+});
 
  /**
  * LEADERBOARD ENDPOINTS
  */
+app.get('/leaderboard/:id', (req, res) => {
+    // get user's leaderboard results
+    const id = req.params.id;
+    return res.send('GET a user\'s leaderboard results\n');
+});
+
+app.post('/leaderboard/:id', (req, res) => {
+    // add a user's results to their leaderboard ]
+    const id = req.params.id;
+    return res.send('POST a user\'s leaderboard results\n');
+});
 
 /**
- * GAME STATE ENDPOINTS
+ * GAME STATE ENDPOINTS - add these if want to allow the user to pause / come back to their game
  */
+
+ // listening for the above endpoints
+app.listen(port, () =>
+console.log(`Example app listening on port ${port}!`),
+);
 
 /**
  * DATABASE ACTIVATION
