@@ -5,48 +5,71 @@ const _ = require('lodash');
 const { QueryTypes } = require('sequelize');
 const db = require("../db-configs/db.index");
 
-function createUser(req, res) {
+async function createUser(req, res) {
     let user = req.body;
-    // check if all fields have been populated correctly by the user
-    checkPossibleUser(user, res);
-    // check if a user already exists with the username given
-    checkUserExists(user, res);
-    // TODO - create the user and add them to the db
-    console.log(`New user: \"${user.name}\" created`);
-    return res.status(200).json(user);
+
+    let[validInput, userExists] = await Promise.all([checkPossibleUser(user), checkUserExists(user)]);
+    
+    // check to see if there were issues for validInput or userExists
+    if (validInput.status === 400) {
+        return res.status(400).json({status: 400, message: validInput.message});
+    } else if (userExists.status === 400) {
+        return res.status(400).json({status: 400, message: userExists.message});
+    }
+
+    // the new user is able to be created; add user to database now
+    db.sequelize.query('INSERT INTO \`Users\` (username, password, instagram_account, createdAt, updatedAt) ' + 
+    'VALUES (:username, :password, :instagram_account, :createdAt, :updatedAt)', {
+        replacements: {username: req.body.username, password: req.body.password, 
+            instagram_account: req.body.instagram_account, createdAt: new Date(), updatedAt: new Date()},
+        type: db.sequelize.QueryTypes.INSERT
+      })
+      .then(data => {
+          console.log(`New user: \"${user.username}\" created`);
+          return res.status(201).json(user)
+      })
+      .catch(error => {
+        console.error("Error when adding a new user to db");
+        console.error(error);
+      });
 }
 
-function checkPossibleUser(user, res) {
+async function checkPossibleUser(user) {
     // check to see if all necessary information has been inputted
     if (_.isEmpty(user)) {
-        return res.status(400).json({status: 400, message: "User information must be given"});
-    } else if (_.isEmpty(user.name)) {
-        return res.status(400).json({status: 400, message: "Name for user must be set"});
-    } else if (_.isEmpty(user.email)) {
-        return res.status(400).json({status: 400, message: "Email for user must be set"});
+        return {status: 400, message: "User information must be given"};
+    } else if (_.isEmpty(user.username)) {
+        return {status: 400, message: "Name for user must be set"};
     } else if (_.isEmpty(user.password)) {
-        return res.status(400).json({status: 400, message: "Password for user must be set"});
+        return {status: 400, message: "Password for user must be set"};
     }
+    return {status: 200};
 }
 
-function checkUserExists(user, res) {
-     // TODO: check if there already exists a user with the same name
-     // make a call to the backend to see if an entry already exists w the same username
-     // if an entry in the databse uses the same username:
-     if (false) {
-        return res.status(400).json({status: 400, message: "The entered username already exists"});
-     }
-     // otherwise, just return from the function as usual
-}
-
-function checkLogin(req, res) {
-
-    db.sequelize.query('SELECT * FROM users', {
+async function checkUserExists(user) {
+    return db.sequelize.query('SELECT * FROM users WHERE username=(:username)', {
+        replacements: {username: user.username},
         type: db.sequelize.QueryTypes.SELECT
       })
       .then(data => {
-          console.log(data.username);
-          console.log("data was found!");
+          if (!_.isEmpty(data)) {
+            return {status: 400, message: "Username must be unique"};
+          } else {
+              return {status: 200};
+          }
+      })
+      .catch(error => {
+          console.error("Error when checking if username is found in db");
+          return {status: 500, error};
+      });
+}
+
+function checkLogin(req, res) {
+    db.sequelize.query('SELECT * FROM users WHERE username=(:username)', {
+        replacements: {username: req.params.username},
+        type: db.sequelize.QueryTypes.SELECT
+      })
+      .then(data => {
           if (data.username === req.params.username && data.password === req.params.password) {
             return res.status(200).json(data);
           } else {
