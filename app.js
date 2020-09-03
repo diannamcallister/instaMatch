@@ -1,11 +1,12 @@
-const {getImagesFromInstagram} = require('./BackEnd/Controllers/instagram-endpoints');
+const {getImagesFromInstagram} = require('./backend/controllers/instagram-endpoints');
+const {createUser, checkLogin} = require('./backend/controllers/users.js');
 const config = require('./config.js');
 const port = config.port;
 
 // import express from 'express';
 const express = require('express');
 const bodyParser = require('body-parser');
-const url = require('url');
+const cors = require("cors");
 
 const app = express();
 app.use(bodyParser.json());
@@ -19,13 +20,9 @@ app.get('/user/:id', (req, res) => {
     return res.send('Received a GET HTTP method\n');
 });
 
-app.post('/user', (req, res) => {
-    // req.body includes all of the fields we need
-    const user = req.body;
-    // now send this to manager level
+app.get('/user/:username/:password', (req, res) => checkLogin(req, res));
 
-    res.json(user);
-});
+app.post('/user', (req, res) => createUser(req, res));
 
 app.put('/', (req, res) => {
     return res.send('Received a PUT HTTP method\n');
@@ -44,6 +41,7 @@ app.get('/insta/:account_name', (req, res) => {
     // create another function to perform a GET request to instagram's APIs - in another file?
     return getImagesFromInstagram(account_name).then((results) => {
         console.log("made it to results!");
+        console.log(results);
         return res.send('GET a certain instagram account\n');
     })
 });
@@ -74,9 +72,18 @@ app.post('/leaderboard/:id', (req, res) => {
  * GAME STATE ENDPOINTS - add these if want to allow the user to pause / come back to their game
  */
 
+/**
+ * Database Connection
+ */
+const db = require("./backend/db-configs/db.index");
+db.sequelize.sync({ force: true }).then(() => {
+    console.log("Drop and re-sync db.\n");
+});
+
+
  // listening for the above endpoints
 app.listen(port, () =>
-console.log(`Example app listening on port ${port}!`),
+console.log(`Example app listening on port ${port}!\n`),
 );
 
 /**

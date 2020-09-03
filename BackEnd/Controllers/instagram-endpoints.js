@@ -13,6 +13,7 @@ function getImagesFromInstagram(account_name) {
     }).then((result) => {
         console.log("got data!")
         console.log(result);
+        return result;
     }).catch((error) => {
         console.log("error!");
         console.log(error);
