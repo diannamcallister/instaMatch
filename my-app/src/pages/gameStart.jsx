@@ -15,15 +15,38 @@ class GameStart extends React.Component {
 
   constructor() {
     super();
-    console.log("in constr");
-    console.log(this.props);
     this.handleAccountChosen = this.handleAccountChosen.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+    this.getStats = this.getStats.bind(this);
     this.state = {
       account_name:'',
       accountNameError:false,
-      stats_url: "/user/5"
+      results:false,
+      user_data:{}
     }
+  }
+
+  getStats = () => {
+    axios.get(`http://localhost:8081/leaderboard/${this.props.location.state.username}`)
+      .then(res => {
+      if (res.data.leaderboard_entry) {
+          // there is a leaderboard entry
+          let user_info = {
+            username: res.data.leaderboard_entry.username ? res.data.leaderboard_entry.username : '',
+            high_score: res.data.leaderboard_entry.score ? res.data.leaderboard_entry.score : '',
+            time: res.data.leaderboard_entry.time ? res.data.leaderboard_entry.time : '',
+            instagram_account: res.data.leaderboard_entry.instagram_account ? res.data.leaderboard_entry.instagram_account : ''
+          }
+          this.setState({user_data: user_info});
+          console.log(this.state.user_data);
+          this.setState({results:true});
+      } else {
+        this.setState({user_data: {username: this.props.location.state.username}});
+        this.setState({results:true});
+      }
+    })
+    .catch(error => {
+    });
   }
 
   handleAccountChosen = (e) => {
@@ -58,19 +81,18 @@ class GameStart extends React.Component {
     return (
       <div className="App">
       <header className="App-header">InstaMatch
-      <Link to={{pathname: "/user", state: {username: this.props.location.state.username}}}>
         <Button animated
                 type='submit'
                 size="large"
-                //style={{ background: '#87d0e4', color: '#ffff', alignSelf: 'flex-end', position: 'absolute'}}
                 style={{ background: '#87d0e4', color: '#ffff', right:'5px', position: 'absolute'}}
+                onClick={this.getStats}
                 >
                 <Button.Content visible> Your Statistics</Button.Content>
                 <Button.Content hidden><Icon name='id card' /></Button.Content>
+                {this.state.results ? <Redirect push to={{pathname: "/user", state: {user_data: this.state.user_data}}} /> : null}
         </Button>
-      </Link>
       </header>
-      <h3>Enter the name of an Instagram Account you want to use the images of to play a game. {this.props.location.state.username}</h3>
+      <h3>Enter the name of an Instagram Account you want to use the images of to play a game.</h3>
       <Form 
           onSubmit={(event) => {this.handleAccountChosen(event);} } 
           error={this.state.accountFormError}>
