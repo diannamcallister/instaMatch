@@ -36,8 +36,12 @@ async function getURLsFromInstagram(account_name) {
         console.log(`Got first ${config.num_imgs} images of ${account_name}`);
         return {status: 200, urls: urls};
     }).catch((error) => {
+        if (error.statusCode === 404) {
+            // the instagram account does not exist
+            return {status: 400, message: "The account you requested does not exist"}
+        } 
+        // another issue occurred
         console.error("Error when retrieving images from instagram");
-        console.error(error);
         return {status: 500, message: "An error occurred when retrieving images from the instagram API"}
     });
 }

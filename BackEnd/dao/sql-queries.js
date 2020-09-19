@@ -24,7 +24,7 @@ async function db_getUserByUsername(username) {
         type: db.sequelize.QueryTypes.SELECT
       })
       .then(data => {
-          return {status: 200, data: data};
+          return {status: 200, data: data[0]};
       })
       .catch(error => {
           console.error("Error when retrieving a user from the db");
