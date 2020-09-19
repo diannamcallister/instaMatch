@@ -47,7 +47,7 @@ async function checkValidUser(user) {
 async function checkUserExists(user) {
     let db_user = await db_getUserByUsername(user.username);
     if (db_user.status === 200) {
-        if (!_.isEmpty(db_user.user)) {
+        if (!_.isEmpty(db_user.data)) {
             return {status: 400, message: "Username must be unique"};
           } else {
               return {status: 200};
