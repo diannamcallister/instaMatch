@@ -1,16 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
-    const User = sequelize.define("user", {
+    const Leaderboard = sequelize.define("leaderboard", {
       username: {
         type: Sequelize.STRING,
         primaryKey: true
       },
-      password: {
-        type: Sequelize.STRING
+      score: {
+        type: Sequelize.INTEGER
+      },
+      time: {
+        type: Sequelize.INTEGER
       },
       instagram_account: {
         type: Sequelize.STRING
       }
     });
     
-    return User;
+    return Leaderboard;
   };

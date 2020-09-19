@@ -1,5 +1,6 @@
 const {getImagesFromInstagram} = require('./backend/controllers/instagram-endpoints');
 const {createUser, checkLogin} = require('./backend/controllers/users.js');
+const {getLeaderboardEntry, createOrUpdateLeaderboardEntry} = require('./backend/controllers/leaderboard.js');
 const config = require('./config.js');
 const port = config.port;
 
@@ -8,7 +9,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 
+var corsOptions = {
+    origin: "http://localhost:3000"
+};
 const app = express();
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 /**
@@ -35,16 +40,7 @@ app.delete('/', (req, res) => {
 /**
  * INSTAGRAM ENDPOINTS
  */
-app.get('/insta/:account_name', (req, res) => {
-    // get instagram account name
-    const account_name = req.params.account_name;
-    // create another function to perform a GET request to instagram's APIs - in another file?
-    return getImagesFromInstagram(account_name).then((results) => {
-        console.log("made it to results!");
-        console.log(results);
-        return res.send('GET a certain instagram account\n');
-    })
-});
+app.get('/insta/:account_name', (req, res) => getImagesFromInstagram(req, res));
 
 app.get('/insta/me', (req, res) => {
     // the user wants to use their own pics
@@ -56,17 +52,9 @@ app.get('/insta/me', (req, res) => {
  /**
  * LEADERBOARD ENDPOINTS
  */
-app.get('/leaderboard/:id', (req, res) => {
-    // get user's leaderboard results
-    const id = req.params.id;
-    return res.send('GET a user\'s leaderboard results\n');
-});
+app.get('/leaderboard/:username', (req, res) => getLeaderboardEntry(req, res));
 
-app.post('/leaderboard/:id', (req, res) => {
-    // add a user's results to their leaderboard ]
-    const id = req.params.id;
-    return res.send('POST a user\'s leaderboard results\n');
-});
+app.post('/leaderboard', (req, res) => createOrUpdateLeaderboardEntry(req, res));
 
 /**
  * GAME STATE ENDPOINTS - add these if want to allow the user to pause / come back to their game

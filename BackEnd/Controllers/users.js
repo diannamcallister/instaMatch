@@ -58,16 +58,16 @@ async function checkUserExists(user) {
     }
 }
 
-function checkLogin(req, res) {
+async function checkLogin(req, res) {
     let user = await db_getUserByUsername(req.params.username);
     if (user.status === 200) {
-        if (data.username === req.params.username && data.password === req.params.password) {
+        if (! _.isEmpty(user.data) && user.data.username === req.params.username && user.data.password === req.params.password) {
             return res.status(200).json(data);
-          } else {
+        } else {
             return res.status(400).json({status: 400, message: "The entered username & password were incorrect"});
-          }
+        }
     } else {
-        // db error occurred
+        // error occurred when doing retrieval of user from db
         return res.status(user.status).json({status: user.status, message: user.message});
     }
 }
