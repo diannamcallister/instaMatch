@@ -127,7 +127,7 @@ class PlayGame extends React.Component {
             <Button animated
                     type='submit'
                     size="large"
-                    style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'5px', position: 'absolute'}}
+                    style={{ background: '##ffff', color: 'grey', right:'5px', position: 'absolute'}}
                     >
                     <Button.Content visible> Logout</Button.Content>
                     <Button.Content hidden><Icon name='lock' /></Button.Content>
@@ -139,7 +139,7 @@ class PlayGame extends React.Component {
           <Button animated
                         type='submit'
                         size="large"
-                        style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'600px', position: 'relative'}}
+                        style={{ background: '##ffff', color: 'grey', right:'600px', position: 'relative'}}
                         onClick={() => this.cardsMatch()}
                         >
                         <Button.Content visible> Hide Cards</Button.Content>
@@ -148,7 +148,7 @@ class PlayGame extends React.Component {
             <Button animated
                         type='submit'
                         size="large"
-                        style={{ background: '##ffff', color: 'grey', opacity:'0.75', left:'600px'}}
+                        style={{ background: '##ffff', color: 'grey', left:'600px'}}
                         onClick={() => this.cardsMatch()}
                         >
                         <Button.Content visible> Help</Button.Content>

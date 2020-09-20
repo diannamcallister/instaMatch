@@ -98,7 +98,7 @@ class GameStart extends React.Component {
         <Button animated
                 type='submit'
                 size="large"
-                style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'5px', position: 'absolute'}}
+                style={{ background: '##ffff', color: 'grey', right:'5px', position: 'absolute'}}
                 >
                 <Button.Content visible> Logout</Button.Content>
                 <Button.Content hidden><Icon name='lock' /></Button.Content>
@@ -109,7 +109,7 @@ class GameStart extends React.Component {
         <Button animated
                 type='submit'
                 size="large"
-                style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'5px', position: 'absolute'}}
+                style={{ background: '##ffff', color: 'grey', right:'5px', position: 'absolute'}}
                 onClick={this.getStats}
                 >
                 <Button.Content visible> Your Statistics</Button.Content>
@@ -145,7 +145,7 @@ class GameStart extends React.Component {
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '##ffff', color: 'grey', opacity:'0.75'}}
+              style={{ background: '##ffff', color: 'grey'}}
               >
               <Button.Content visible> Start Game</Button.Content>
               <Button.Content hidden><Icon name='play' /></Button.Content>

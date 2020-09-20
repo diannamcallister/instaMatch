@@ -22,7 +22,7 @@ class WonGame extends React.Component {
             <Button animated
                     type='submit'
                     size="large"
-                    style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'15px', position: 'absolute'}}
+                    style={{ background: '##ffff', color: 'grey', right:'15px', position: 'absolute'}}
                     >
                     <Button.Content visible> Logout</Button.Content>
                     <Button.Content hidden><Icon name='lock' /></Button.Content>
@@ -72,7 +72,7 @@ class WonGame extends React.Component {
                 <Button animated
                         type='submit'
                         size="large"
-                        style={{ background: '##ffff', color: 'grey', opacity:'0.75', position: 'relative', padding: '35px'}}
+                        style={{ background: '##ffff', color: 'grey', position: 'relative', padding: '35px'}}
                         >
                         <Button.Content visible> Start New Game</Button.Content>
                         <Button.Content hidden><Icon name='play' /></Button.Content>

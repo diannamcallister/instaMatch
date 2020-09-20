@@ -182,7 +182,7 @@ class Entry extends React.Component {
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '##ffff', color: 'grey', opacity:'0.75'}}
+              style={{ background: '##ffff', color: 'grey'}}
               >
               <Button.Content visible> Log In </Button.Content>
               <Button.Content hidden><Icon name='arrow right' /></Button.Content>
@@ -238,7 +238,7 @@ class Entry extends React.Component {
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '##ffff', color: 'grey', opacity:'0.75'}}
+              style={{ background: '##ffff', color: 'grey'}}
               >
               <Button.Content visible> Sign Up </Button.Content>
               <Button.Content hidden><Icon name='arrow right' /></Button.Content>

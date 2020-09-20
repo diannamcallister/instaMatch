@@ -27,8 +27,8 @@ async function createOrUpdateLeaderboardEntry(req, res) {
         return res.status(201).json(leaderboardEntry);
     } else if (db_leaderboardEntry.status === 200 && !_.isEmpty(db_leaderboardEntry.leaderboard_entry)) {
         // the user already has an entry in the leaderboard
-        //      update the entry if the new score is better than or equal to the old one
-        if (db_leaderboardEntry.leaderboard_entry.score <= leaderboardEntry.score) {
+        //      update the entry if the new score is better than (meaning LOWER) or equal to the old one
+        if (db_leaderboardEntry.leaderboard_entry.score >= leaderboardEntry.score) {
             // the new score is better than the old one - update the score
             let res_leaderboardEntry = await db_updateLeaderboardEntry(leaderboardEntry.username, leaderboardEntry.score, 
                 leaderboardEntry.time, leaderboardEntry.instagram_account);
