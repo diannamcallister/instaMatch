@@ -62,6 +62,7 @@ class Entry extends React.Component {
     axios.post(`http://localhost:8081/user`, user)
     .then(res => {
       console.log("User Created");
+      this.setState({signupWorked: true});
     })
     .catch(error => {
       if (error.response.data.status === 400) {
@@ -197,6 +198,7 @@ class Entry extends React.Component {
           error
           header="Unable to Create an Account."
           content={this.state.signupFormErrorMsg}/> : null}
+          {this.state.signupWorked ? <Redirect push to={{pathname: "/game", state: {username: this.state.signup_username}}} /> : null}
           <div className="bottomSpace">
             <Form.Input
                   type="text"

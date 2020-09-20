@@ -22,7 +22,8 @@ class GameStart extends React.Component {
       account_name:'',
       accountNameError:false,
       results:false,
-      user_data:{}
+      user_data:{},
+      image_urls:[]
     }
   }
 
@@ -41,11 +42,13 @@ class GameStart extends React.Component {
           console.log(this.state.user_data);
           this.setState({results:true});
       } else {
-        this.setState({user_data: {username: this.props.location.state.username}});
+        this.setState({user_data: {username: this.props.location.state.username, time: 0}});
         this.setState({results:true});
       }
     })
     .catch(error => {
+      this.setState({user_data: {username: this.props.location.state.username, time: 0}});
+      this.setState({results:true});
     });
   }
 
@@ -55,12 +58,12 @@ class GameStart extends React.Component {
     axios.get(`http://localhost:8081/insta/${this.state.account_name}`)
     .then(res => {
       console.log("Instagram User Works");
+      this.setState({image_urls: res.data});
       this.setState({gameBegin: true});
     })
     .catch(error => {
       this.setState({gameBegin: false});
       if (error.response.data.status === 400) {
-        console.log("in error 400");
         this.setState({accountFormError: true});
         console.log(error.response.data.message);
         this.setState({accountFormErrorMsg: error.response.data.message});
@@ -102,7 +105,8 @@ class GameStart extends React.Component {
           error
           header="The Instagram Account Chosen Cannot be Used in the Game."
           content={this.state.accountFormErrorMsg}/> : null}
-          {this.state.gameBegin ? <Redirect push to="/" /> : null}
+          {this.state.gameBegin ? <Redirect push to={{pathname:"/playGame", state:{image_urls: this.state.image_urls, instagram_account: 
+                                                      this.state.account_name, username: this.props.location.state.username}}}/> : null}
             <div className="bottomSpace">
             <Form.Input
                   type="text"

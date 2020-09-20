@@ -12,7 +12,7 @@ import {
 import '../App.css';
 import axios from 'axios'
 
-class UserDetails extends React.Component {
+class WonGame extends React.Component {
 
     render() {
         return (
@@ -29,11 +29,12 @@ class UserDetails extends React.Component {
             </Button>
           </Link>
           </header>
-          <h3>Enter the name of an Instagram Account you want to use the images of to play a game.</h3>
+          <h1>You Won! Here are your stats from this game:</h1>
           <Grid columns={1} divided>
+
             <Grid.Row>
             <Grid.Column>
-                <h2 style={{float:'center', margin:'20px', position:'absolute'}}>Username: {this.props.location.state.user_data.username}</h2>
+            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Score: {this.props.location.state.score}</h2>
             </Grid.Column>
             </Grid.Row>
 
@@ -44,7 +45,7 @@ class UserDetails extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>High Score: {this.props.location.state.user_data.high_score}</h2>
+            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Time: {this.props.location.state.time / 1000} seconds</h2>
             </Grid.Column>
             </Grid.Row>
 
@@ -55,18 +56,7 @@ class UserDetails extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Time: {this.props.location.state.user_data.time / 1000} seconds</h2>
-            </Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row>
-            <Grid.Column>
-            </Grid.Column>
-            </Grid.Row>
-
-            <Grid.Row>
-            <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Instagram Account Used: {this.props.location.state.user_data.instagram_account}</h2>
+            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Instagram Account Used: {this.props.location.state.instagram_account}</h2>
             </Grid.Column>
             </Grid.Row>
 
@@ -76,7 +66,7 @@ class UserDetails extends React.Component {
             </Grid.Row>
           </Grid>
           <div className="topSpace" style={{paddingTop:'100px'}}>
-            <Link to={{pathname:"/game", state: {username: this.props.location.state.user_data.username}}}>
+            <Link to={{pathname:"/game", state: {username: this.props.location.state.username}}}>
                 <Button animated
                         type='submit'
                         size="large"
@@ -92,4 +82,4 @@ class UserDetails extends React.Component {
     };
 }
 
-export default UserDetails;
+export default WonGame;

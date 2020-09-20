@@ -86,3 +86,8 @@
   float:'left';
   margin:'20px';
 }
+
+.photo {
+  height: 120px;
+  width: 90px;
+}
