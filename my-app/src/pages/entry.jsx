@@ -5,10 +5,12 @@ import {
   Button,
   Form,
   Icon,
-  Message,
+  Message, Grid
 } from 'semantic-ui-react'
 import '../App.css';
-import axios from 'axios'
+import styles from '../App.css';
+import axios from 'axios';
+import background from '../background.png';
 
 class Entry extends React.Component {
 
@@ -139,12 +141,12 @@ class Entry extends React.Component {
 
   render() {
   return (
-    <div className="App">
-      <header className="App-header">InstaMatch</header>
+    <div className="App extra-height">
       <div className="splitScreen">
-        <div className="topPane">
+        <div className="topPane paddingTop">
           <div className="small-header">Login</div>
           <Form 
+          style={{ width:"300px", marginLeft:"220px"}}
           onSubmit={(event) => {this.handleLogin(event);} } 
           error={this.state.loginFormError}>
           {this.state.loginFormError
@@ -167,7 +169,8 @@ class Entry extends React.Component {
           </div>
           <div className="bottomSpace">
             <Form.Input
-                  type="text"
+                  tyle={{ width:"300px", paddingLeft : '300px', justifyContent : 'center', alignItems: 'center'}}
+                  type="password"
                   name="password"
                   icon="lock"
                   iconPosition="left"
@@ -179,7 +182,7 @@ class Entry extends React.Component {
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '#87d0e4', color: '#ffff' }}
+              style={{ background: '##ffff', color: 'grey', opacity:'0.75'}}
               >
               <Button.Content visible> Log In </Button.Content>
               <Button.Content hidden><Icon name='arrow right' /></Button.Content>
@@ -187,9 +190,10 @@ class Entry extends React.Component {
           </Form>
         </div>
         <div className="middleLine"></div>
-        <div className="bottomPane">
+        <div className="bottomPane paddingTop">
           <div className="small-header">Sign Up</div>
           <Form 
+          style={{ width:"300px", marginLeft:"220px"}}
           onSubmit={(event) => {this.handleSignUp(event);} } 
           error={this.state.signupFormError}>
           {this.state.signupFormError
@@ -212,7 +216,7 @@ class Entry extends React.Component {
           </div>
           <div className="bottomSpace">
             <Form.Input
-                  type="text"
+                  type="password"
                   name="password"
                   icon="lock"
                   iconPosition="left"
@@ -227,14 +231,14 @@ class Entry extends React.Component {
                   name="instagram_account"
                   icon="camera retro"
                   iconPosition="left"
-                  placeholder="Instagram Account"
+                  placeholder="(Optional): Your Instagram Account"
                   onChange={(value) => {this.onInputChange(value, "instagram_account")}}
             />
           </div>
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '#87d0e4', color: '#ffff' }}
+              style={{ background: '##ffff', color: 'grey', opacity:'0.75'}}
               >
               <Button.Content visible> Sign Up </Button.Content>
               <Button.Content hidden><Icon name='arrow right' /></Button.Content>

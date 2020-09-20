@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Text } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 import {
@@ -14,26 +14,30 @@ import axios from 'axios'
 
 class UserDetails extends React.Component {
 
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
           <div className="App">
-          <header className="App-header">InstaMatch
-          <Link to="/">
+          <header className="App-header">
             <Button animated
                     type='submit'
                     size="large"
-                    style={{ background: '#87d0e4', color: '#ffff', right:'5px', position: 'absolute'}}
+                    style={{ background: 'white', color: 'grey', right:'375px', top:'115px', position: 'absolute'}}
+                    onClick={this.props.closeModal}
                     >
-                    <Button.Content visible> Logout</Button.Content>
-                    <Button.Content hidden><Icon name='lock' /></Button.Content>
+                    <Button.Content visible> X</Button.Content>
             </Button>
-          </Link>
           </header>
-          <h3>Enter the name of an Instagram Account you want to use the images of to play a game.</h3>
+          <div className="half-padding-top">
+          <h1 style={{color:'white'}}>Here are your statistics:</h1>
+          <div className="half-padding-top">
           <Grid columns={1} divided>
             <Grid.Row>
             <Grid.Column>
-                <h2 style={{float:'center', margin:'20px', position:'absolute'}}>Username: {this.props.location.state.user_data.username}</h2>
+                <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Username:</b> {this.props.user_data.username}</p>
             </Grid.Column>
             </Grid.Row>
 
@@ -44,7 +48,7 @@ class UserDetails extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>High Score: {this.props.location.state.user_data.high_score}</h2>
+            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>High Score:</b> {this.props.user_data.high_score}</p>
             </Grid.Column>
             </Grid.Row>
 
@@ -55,7 +59,7 @@ class UserDetails extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Time: {this.props.location.state.user_data.time / 1000} seconds</h2>
+            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Time:</b> {this.props.user_data.time / 1000}</p>
             </Grid.Column>
             </Grid.Row>
 
@@ -66,7 +70,7 @@ class UserDetails extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Instagram Account Used: {this.props.location.state.user_data.instagram_account}</h2>
+            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Instagram Account Used:</b> {this.props.user_data.instagram_account}</p>
             </Grid.Column>
             </Grid.Row>
 
@@ -75,17 +79,7 @@ class UserDetails extends React.Component {
             </Grid.Column>
             </Grid.Row>
           </Grid>
-          <div className="topSpace" style={{paddingTop:'100px'}}>
-            <Link to={{pathname:"/game", state: {username: this.props.location.state.user_data.username}}}>
-                <Button animated
-                        type='submit'
-                        size="large"
-                        style={{ background: '#87d0e4', color: '#ffff', position: 'relative', padding: '35px'}}
-                        >
-                        <Button.Content visible> Start New Game</Button.Content>
-                        <Button.Content hidden><Icon name='play' /></Button.Content>
-                </Button>
-            </Link>
+          </div>
           </div>
           </div>
         )

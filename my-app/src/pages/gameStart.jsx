@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { View } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 import {
   Button,
   Form,
   Icon,
-  Message,
+  Message
 } from 'semantic-ui-react'
 import '../App.css';
-import axios from 'axios'
+import axios from 'axios';
+import Modal from 'react-modal';
+import UserDetails from './userDetails';
 
 
 class GameStart extends React.Component {
@@ -18,12 +20,14 @@ class GameStart extends React.Component {
     this.handleAccountChosen = this.handleAccountChosen.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.getStats = this.getStats.bind(this);
+    this.closeModal = this.closeModal.bind(this);
     this.state = {
       account_name:'',
       accountNameError:false,
       results:false,
       user_data:{},
-      image_urls:[]
+      image_urls:[],
+      modalIsOpen:false
     }
   }
 
@@ -40,16 +44,22 @@ class GameStart extends React.Component {
           }
           this.setState({user_data: user_info});
           console.log(this.state.user_data);
-          this.setState({results:true});
+          this.setState({modalIsOpen: true});
+          // this.setState({results:true});
       } else {
         this.setState({user_data: {username: this.props.location.state.username, time: 0}});
-        this.setState({results:true});
+        this.setState({modalIsOpen: true});
+        // this.setState({results:true});
       }
     })
     .catch(error => {
       this.setState({user_data: {username: this.props.location.state.username, time: 0}});
-      this.setState({results:true});
+      // this.setState({results:true});
     });
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
   handleAccountChosen = (e) => {
@@ -82,21 +92,35 @@ class GameStart extends React.Component {
 
   render() {
     return (
-      <div className="App">
-      <header className="App-header">InstaMatch
+      <div className="App-height">
+      <header className="App-header">
+      <Link to="/">
         <Button animated
                 type='submit'
                 size="large"
-                style={{ background: '#87d0e4', color: '#ffff', right:'5px', position: 'absolute'}}
+                style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'5px', position: 'absolute'}}
+                >
+                <Button.Content visible> Logout</Button.Content>
+                <Button.Content hidden><Icon name='lock' /></Button.Content>
+                {this.state.results ? <Redirect push to={{pathname: "/user", state: {user_data: this.state.user_data}}} /> : null}
+        </Button>
+        </Link>
+        <div className="half-padding-top">
+        <Button animated
+                type='submit'
+                size="large"
+                style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'5px', position: 'absolute'}}
                 onClick={this.getStats}
                 >
                 <Button.Content visible> Your Statistics</Button.Content>
                 <Button.Content hidden><Icon name='id card' /></Button.Content>
                 {this.state.results ? <Redirect push to={{pathname: "/user", state: {user_data: this.state.user_data}}} /> : null}
         </Button>
+        </div>
       </header>
-      <h3>Enter the name of an Instagram Account you want to use the images of to play a game.</h3>
-      <Form 
+      <div className="paddingTop">
+      <h3 style={{color: 'white'}}>Enter the name of an Instagram Account you want to use the images of to play a game.</h3>
+      <Form style={{ width:"300px", marginLeft:"40vw"}}
           onSubmit={(event) => {this.handleAccountChosen(event);} } 
           error={this.state.accountFormError}>
           {this.state.accountFormError
@@ -111,7 +135,7 @@ class GameStart extends React.Component {
             <Form.Input
                   type="text"
                   name="username"
-                  icon="user"
+                  icon="search"
                   iconPosition="left"
                   placeholder="Username"
                   onChange={(value) => {this.onInputChange(value)}}
@@ -121,12 +145,16 @@ class GameStart extends React.Component {
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '#87d0e4', color: '#ffff' }}
+              style={{ background: '##ffff', color: 'grey', opacity:'0.75'}}
               >
               <Button.Content visible> Start Game</Button.Content>
               <Button.Content hidden><Icon name='play' /></Button.Content>
           </Button>
           </Form>
+          </div>
+          <Modal className='my-modal' isOpen={this.state.modalIsOpen} style={{overlay:{zIndex:1000}}} disableAutoFocus={true}>
+              <UserDetails user_data={this.state.user_data} closeModal={this.closeModal}/>
+          </Modal>
       </div>
     );
   }

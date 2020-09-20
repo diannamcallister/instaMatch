@@ -11,6 +11,7 @@ import {
 } from 'semantic-ui-react';
 import '../App.css';
 import axios from 'axios';
+import insta_logo from '../insta_logo.png';
 
 class PlayGame extends React.Component {
 
@@ -19,7 +20,8 @@ class PlayGame extends React.Component {
         this.displayPic = this.displayPic.bind(this);
         this.cardsMatch = this.cardsMatch.bind(this);
         this.wonGame = this.wonGame.bind(this);
-        var back_card = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1200px-Question_Mark.svg.png";
+        // var back_card = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1200px-Question_Mark.svg.png";
+        var back_card = "https://cdn.freelogovectors.net/wp-content/uploads/2016/12/instagram-logo1.png";
         this.state = {
           image_urls: this.props.location.state.image_urls,
           position_cards_up: [],
@@ -35,7 +37,7 @@ class PlayGame extends React.Component {
 
     cardsMatch() {
         let completed_card_url = "https://images.vexels.com/media/users/3/157931/isolated/preview/604a0cadf94914c7ee6c6e552e9b4487-curved-check-mark-circle-icon-by-vexels.png"
-        let back_card = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1200px-Question_Mark.svg.png";
+        let back_card = "https://cdn.freelogovectors.net/wp-content/uploads/2016/12/instagram-logo1.png";
 
         if (this.state.position_cards_up.length === 2) {
             var position1 = this.state.position_cards_up[0];
@@ -94,7 +96,7 @@ class PlayGame extends React.Component {
     }
 
     displayPic(row, col) {
-        let back_card = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1200px-Question_Mark.svg.png";
+        let back_card = "https://cdn.freelogovectors.net/wp-content/uploads/2016/12/instagram-logo1.png";
         if (this.state.position_cards_up.length < 2 && this.state.cur_pic[row][col] === back_card) {
             // less than 2 cards are flipped, so we can flip another card to show an insta pic
 
@@ -120,49 +122,59 @@ class PlayGame extends React.Component {
     render() {
         return (
           <div className="App">
-          <header className="App-header">InstaMatch
+          <header className="App-header">
           <Link to="/">
             <Button animated
                     type='submit'
                     size="large"
-                    style={{ background: '#87d0e4', color: '#ffff', right:'40px', position: 'absolute'}}
+                    style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'5px', position: 'absolute'}}
                     >
                     <Button.Content visible> Logout</Button.Content>
                     <Button.Content hidden><Icon name='lock' /></Button.Content>
             </Button>
           </Link>
+                {this.state.has_won ? <Redirect push to={{pathname:"/wonGame", state: this.state.leaderboard_stats}}/> : null}
+          </header>
+          <div className="half-padding-top">
           <Button animated
                         type='submit'
                         size="large"
-                        style={{ background: '#87d0e4', color: '#ffff', right:'600px', position: 'relative'}}
+                        style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'600px', position: 'relative'}}
                         onClick={() => this.cardsMatch()}
                         >
                         <Button.Content visible> Hide Cards</Button.Content>
                         <Button.Content hidden><Icon name='eye slash' /></Button.Content>
-                </Button>
-                {this.state.has_won ? <Redirect push to={{pathname:"/wonGame", state: this.state.leaderboard_stats}}/> : null}
-          </header>
-          <h3>Play the game! You're using images from the instagram account: {this.props.location.state.instagram_account}</h3>
+            </Button>
+            <Button animated
+                        type='submit'
+                        size="large"
+                        style={{ background: '##ffff', color: 'grey', opacity:'0.75', left:'600px'}}
+                        onClick={() => this.cardsMatch()}
+                        >
+                        <Button.Content visible> Help</Button.Content>
+                        <Button.Content hidden><Icon name='eye slash' /></Button.Content>
+            </Button>
+          <h2 style={{color:'white'}}>Play the game! You're using images from the instagram account: {this.props.location.state.instagram_account}</h2>
           <Grid columns={4} divided>
             {/* row 1 */}
             <Grid.Row>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(0, 0)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(0, 0)}>
                         <Image className="photo" src={this.state.cur_pic[0][0].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(0, 1)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(0, 1)}>
                         <Image className="photo" src={this.state.cur_pic[0][1].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(0, 2)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(0, 2)}>
                         <Image className="photo" src={this.state.cur_pic[0][2].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(0, 3)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(0, 3)}>
                         <Image className="photo" src={this.state.cur_pic[0][3].replace('"','')} />
                     </Button>
                 </Grid.Column>
@@ -171,22 +183,22 @@ class PlayGame extends React.Component {
             {/* row 2 */}
             <Grid.Row>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(1, 0)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(1, 0)}>
                         <Image className="photo" src={this.state.cur_pic[1][0].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(1, 1)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(1, 1)}>
                         <Image className="photo" src={this.state.cur_pic[1][1].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(1, 2)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(1, 2)}>
                         <Image className="photo" src={this.state.cur_pic[1][2].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(1, 3)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(1, 3)}>
                         <Image className="photo" src={this.state.cur_pic[1][3].replace('"','')} />
                     </Button>
                 </Grid.Column>
@@ -195,22 +207,22 @@ class PlayGame extends React.Component {
             {/* row 3 */}
             <Grid.Row>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(2, 0)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(2, 0)}>
                         <Image className="photo" src={this.state.cur_pic[2][0].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(2, 1)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(2, 1)}>
                         <Image className="photo" src={this.state.cur_pic[2][1].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(2, 2)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(2, 2)}>
                         <Image className="photo" src={this.state.cur_pic[2][2].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(2, 3)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(2, 3)}>
                         <Image className="photo" src={this.state.cur_pic[2][3].replace('"','')} />
                     </Button>
                 </Grid.Column>
@@ -219,39 +231,28 @@ class PlayGame extends React.Component {
             {/* row 4 */}
             <Grid.Row>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(3, 0)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(3, 0)}>
                         <Image className="photo" src={this.state.cur_pic[3][0].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(3, 1)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(3, 1)}>
                         <Image className="photo" src={this.state.cur_pic[3][1].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(3, 2)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(3, 2)}>
                         <Image className="photo" src={this.state.cur_pic[3][2].replace('"','')} />
                     </Button>
                 </Grid.Column>
                 <Grid.Column>
-                    <Button onClick={() => this.displayPic(3, 3)}>
+                    <Button style={{ background: 'white'}} onClick={() => this.displayPic(3, 3)}>
                         <Image className="photo" src={this.state.cur_pic[3][3].replace('"','')} />
                     </Button>
                 </Grid.Column>
             </Grid.Row>
 
           </Grid>
-          
-          <div className="topSpace" style={{paddingTop:'100px'}}>
-                <Button animated
-                        type='submit'
-                        size="large"
-                        style={{ background: '#87d0e4', color: '#ffff', position: 'relative', padding: '30px'}}
-                        onClick={() => this.cardsMatch()}
-                        >
-                        <Button.Content visible> Hide Cards</Button.Content>
-                        <Button.Content hidden><Icon name='eye slash' /></Button.Content>
-                </Button>
           </div>
           </div>
         )

@@ -16,25 +16,27 @@ class WonGame extends React.Component {
 
     render() {
         return (
-          <div className="App">
-          <header className="App-header">InstaMatch
+          <div className="App-height">
+          <header className="App-header">
           <Link to="/">
             <Button animated
                     type='submit'
                     size="large"
-                    style={{ background: '#87d0e4', color: '#ffff', right:'5px', position: 'absolute'}}
+                    style={{ background: '##ffff', color: 'grey', opacity:'0.75', right:'15px', position: 'absolute'}}
                     >
                     <Button.Content visible> Logout</Button.Content>
                     <Button.Content hidden><Icon name='lock' /></Button.Content>
             </Button>
           </Link>
           </header>
-          <h1>You Won! Here are your stats from this game:</h1>
+          <div className="half-padding-top">
+          <h1 style={{color:'white'}}>You Won! Here are your stats from this game:</h1>
+          <div className="half-padding-top">
           <Grid columns={1} divided>
 
             <Grid.Row>
             <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Score: {this.props.location.state.score}</h2>
+            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Score:</b> {this.props.location.state.score}</p>
             </Grid.Column>
             </Grid.Row>
 
@@ -45,7 +47,7 @@ class WonGame extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Time: {this.props.location.state.time / 1000} seconds</h2>
+            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Time:</b> {this.props.location.state.time / 1000}</p>
             </Grid.Column>
             </Grid.Row>
 
@@ -56,7 +58,7 @@ class WonGame extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <h2 style={{float:'left', margin:'20px', position:'absolute'}}>Instagram Account Used: {this.props.location.state.instagram_account}</h2>
+            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Instagram Account Used:</b> {this.props.location.state.instagram_account}</p>
             </Grid.Column>
             </Grid.Row>
 
@@ -70,12 +72,14 @@ class WonGame extends React.Component {
                 <Button animated
                         type='submit'
                         size="large"
-                        style={{ background: '#87d0e4', color: '#ffff', position: 'relative', padding: '35px'}}
+                        style={{ background: '##ffff', color: 'grey', opacity:'0.75', position: 'relative', padding: '35px'}}
                         >
                         <Button.Content visible> Start New Game</Button.Content>
                         <Button.Content hidden><Icon name='play' /></Button.Content>
                 </Button>
             </Link>
+          </div>
+          </div>
           </div>
           </div>
         )
