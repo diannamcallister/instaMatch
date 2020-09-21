@@ -48,7 +48,7 @@ class UserDetails extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>High Score:</b> {this.props.user_data.high_score}</p>
+            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Best Score:</b> {this.props.user_data.high_score}</p>
             </Grid.Column>
             </Grid.Row>
 

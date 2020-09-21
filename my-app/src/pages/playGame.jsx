@@ -11,7 +11,8 @@ import {
 } from 'semantic-ui-react';
 import '../App.css';
 import axios from 'axios';
-import insta_logo from '../insta_logo.png';
+import Modal from 'react-modal';
+import HelpInfo from './helpInfo';
 
 class PlayGame extends React.Component {
 
@@ -20,9 +21,11 @@ class PlayGame extends React.Component {
         this.displayPic = this.displayPic.bind(this);
         this.cardsMatch = this.cardsMatch.bind(this);
         this.wonGame = this.wonGame.bind(this);
+        this.closeModal = this.closeModal.bind(this);
         // var back_card = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1200px-Question_Mark.svg.png";
         var back_card = "https://cdn.freelogovectors.net/wp-content/uploads/2016/12/instagram-logo1.png";
         this.state = {
+          modalIsOpen:false,
           image_urls: this.props.location.state.image_urls,
           position_cards_up: [],
           cur_pic: [[back_card, back_card, back_card, back_card], [back_card, back_card, back_card, back_card], 
@@ -33,6 +36,10 @@ class PlayGame extends React.Component {
           start_time: new Date().getTime(),
           leaderboard_stats: {}
           }
+    }
+
+    closeModal() {
+        this.setState({modalIsOpen: false});
     }
 
     cardsMatch() {
@@ -149,12 +156,12 @@ class PlayGame extends React.Component {
                         type='submit'
                         size="large"
                         style={{ background: '##ffff', color: 'grey', left:'600px'}}
-                        onClick={() => this.cardsMatch()}
+                        onClick={() => this.setState({modalIsOpen:true})}
                         >
                         <Button.Content visible> Help</Button.Content>
                         <Button.Content hidden><Icon name='eye slash' /></Button.Content>
             </Button>
-          <h2 style={{color:'white'}}>Play the game! You're using images from the instagram account: {this.props.location.state.instagram_account}</h2>
+          <p style={{color:'black', fontSize:'25px'}}><b style={{color:"white"}}>Play the game! You're using images from the instagram account:</b> <b>{this.props.location.state.instagram_account}</b></p>
           <Grid columns={4} divided>
             {/* row 1 */}
             <Grid.Row>
@@ -254,6 +261,9 @@ class PlayGame extends React.Component {
 
           </Grid>
           </div>
+          <Modal className='help-modal' isOpen={this.state.modalIsOpen} style={{overlay:{zIndex:1000}}} disableAutoFocus={true}>
+              <HelpInfo closeModal={this.closeModal}/>
+          </Modal>
           </div>
         )
     };

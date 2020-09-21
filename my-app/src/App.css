@@ -34,12 +34,20 @@
   color: #61dafb;
 }
 
-.my-modal {
+.stats-modal {
   width: 90vmin;
   height: 70vmin;
   margin: auto;
   outline: none;
   padding-top: 100px;
+}
+
+.help-modal {
+  width: 90vmin;
+  height: 100vmin;
+  margin: auto;
+  outline: none;
+  padding-top: 70px;
 }
 
 .small-header {

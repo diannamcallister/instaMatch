@@ -152,7 +152,7 @@ class GameStart extends React.Component {
           </Button>
           </Form>
           </div>
-          <Modal className='my-modal' isOpen={this.state.modalIsOpen} style={{overlay:{zIndex:1000}}} disableAutoFocus={true}>
+          <Modal className='stats-modal' isOpen={this.state.modalIsOpen} style={{overlay:{zIndex:1000}}} disableAutoFocus={true}>
               <UserDetails user_data={this.state.user_data} closeModal={this.closeModal}/>
           </Modal>
       </div>
