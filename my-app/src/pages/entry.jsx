@@ -10,7 +10,7 @@ import {
 import '../App.css';
 import styles from '../App.css';
 import axios from 'axios';
-import background from '../background.png';
+import background from '../background.jpeg';
 
 class Entry extends React.Component {
 
