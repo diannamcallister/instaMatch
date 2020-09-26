@@ -7,87 +7,28 @@ import {
   Icon,
   Message
 } from 'semantic-ui-react'
-import '../App.css';
-import axios from 'axios';
+import '../css/setupGame.css';
 import Modal from 'react-modal';
 import UserDetails from './userStats';
+import { get_stats, close_modal, handle_account_chosen, on_input_change } from '../js_pages/setupGame.js';
 
 
 class SetupGame extends React.Component {
 
   constructor() {
     super();
-    this.handleAccountChosen = this.handleAccountChosen.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
-    this.getStats = this.getStats.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.handle_account_chosen = handle_account_chosen.bind(this);
+    this.on_input_change = on_input_change.bind(this);
+    this.get_stats = get_stats.bind(this);
+    this.close_modal = close_modal.bind(this);
     this.state = {
       account_name:'',
-      accountNameError:false,
+      account_name_error:false,
       results:false,
       user_data:{},
       image_urls:[],
-      modalIsOpen:false
+      modal_is_open:false
     }
-  }
-
-  getStats = () => {
-    axios.get(`http://localhost:8081/leaderboard/${this.props.location.state.username}`)
-      .then(res => {
-      if (res.data.leaderboard_entry) {
-          // there is a leaderboard entry
-          let user_info = {
-            username: res.data.leaderboard_entry.username ? res.data.leaderboard_entry.username : '',
-            high_score: res.data.leaderboard_entry.score ? res.data.leaderboard_entry.score : '',
-            time: res.data.leaderboard_entry.time ? res.data.leaderboard_entry.time : '',
-            instagram_account: res.data.leaderboard_entry.instagram_account ? res.data.leaderboard_entry.instagram_account : ''
-          }
-          this.setState({user_data: user_info});
-          console.log(this.state.user_data);
-          this.setState({modalIsOpen: true});
-          // this.setState({results:true});
-      } else {
-        this.setState({user_data: {username: this.props.location.state.username, time: 0}});
-        this.setState({modalIsOpen: true});
-        // this.setState({results:true});
-      }
-    })
-    .catch(error => {
-      this.setState({user_data: {username: this.props.location.state.username, time: 0}});
-      // this.setState({results:true});
-    });
-  }
-
-  closeModal() {
-    this.setState({modalIsOpen: false});
-  }
-
-  handleAccountChosen = (e) => {
-    e.preventDefault();
-
-    axios.get(`http://localhost:8081/insta/${this.state.account_name}`)
-    .then(res => {
-      console.log("Instagram User Works");
-      this.setState({image_urls: res.data});
-      this.setState({gameBegin: true});
-    })
-    .catch(error => {
-      this.setState({gameBegin: false});
-      if (error.response.data.status === 400) {
-        this.setState({accountFormError: true});
-        console.log(error.response.data.message);
-        this.setState({accountFormErrorMsg: error.response.data.message});
-      } else {
-        this.setState({accountFormError: true});
-        this.setState({accountFormErrorMsg: "There was an issue trying to access the instagram account you chose Please try again later!"});
-      }
-    });
-  }
-
-  onInputChange = (newValue) => {
-    this.state.account_name = newValue.target.value;
-    this.setState({accountNameError: false});
-    this.setState({accountFormError: false})
   }
 
   render() {
@@ -98,7 +39,7 @@ class SetupGame extends React.Component {
         <Button animated
                 type='submit'
                 size="large"
-                style={{ background: '##ffff', color: 'grey', right:'5px', position: 'absolute'}}
+                className="right-side-button"
                 >
                 <Button.Content visible> Logout</Button.Content>
                 <Button.Content hidden><Icon name='lock' /></Button.Content>
@@ -109,8 +50,8 @@ class SetupGame extends React.Component {
         <Button animated
                 type='submit'
                 size="large"
-                style={{ background: '##ffff', color: 'grey', right:'5px', position: 'absolute'}}
-                onClick={this.getStats}
+                className="right-side-button"
+                onClick={this.get_stats}
                 >
                 <Button.Content visible> Your Statistics</Button.Content>
                 <Button.Content hidden><Icon name='id card' /></Button.Content>
@@ -119,17 +60,18 @@ class SetupGame extends React.Component {
         </div>
       </header>
       <div className="paddingTop">
-      <h3 style={{color: 'white'}}>Enter the name of an Instagram Account you want to use the images of to play a game.</h3>
-      <Form style={{ width:"300px", marginLeft:"40vw"}}
-          onSubmit={(event) => {this.handleAccountChosen(event);} } 
-          error={this.state.accountFormError}>
-          {this.state.accountFormError
+      <h3>Enter the name of an Instagram Account you want to use the images of to play a game.</h3>
+      <Form
+          className="username-form"
+          onSubmit={(event) => {this.handle_account_chosen(event);} } 
+          error={this.state.account_form_error}>
+          {this.state.account_form_error
           ?
           <Message
           error
           header="The Instagram Account Chosen Cannot be Used in the Game."
-          content={this.state.accountFormErrorMsg}/> : null}
-          {this.state.gameBegin ? <Redirect push to={{pathname:"/playGame", state:{image_urls: this.state.image_urls, instagram_account: 
+          content={this.state.account_form_error_msg}/> : null}
+          {this.state.game_begin ? <Redirect push to={{pathname:"/playGame", state:{image_urls: this.state.image_urls, instagram_account: 
                                                       this.state.account_name, username: this.props.location.state.username}}}/> : null}
             <div className="bottomSpace">
             <Form.Input
@@ -138,22 +80,22 @@ class SetupGame extends React.Component {
                   icon="search"
                   iconPosition="left"
                   placeholder="Username"
-                  onChange={(value) => {this.onInputChange(value)}}
-                  error={this.state.accountNameError}
+                  onChange={(value) => {this.on_input_change(value)}}
+                  error={this.state.account_name_error}
             />
           </div>
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '##ffff', color: 'grey'}}
+              className='button-centered'
               >
               <Button.Content visible> Start Game</Button.Content>
               <Button.Content hidden><Icon name='play' /></Button.Content>
           </Button>
           </Form>
           </div>
-          <Modal className='stats-modal' isOpen={this.state.modalIsOpen} style={{overlay:{zIndex:1000}}} disableAutoFocus={true}>
-              <UserDetails user_data={this.state.user_data} closeModal={this.closeModal}/>
+          <Modal className='stats-modal' isOpen={this.state.modal_is_open} style={{overlay:{zIndex:1000}}} disableAutoFocus={true}>
+              <UserDetails user_data={this.state.user_data} close_modal={this.close_modal}/>
           </Modal>
       </div>
     );

@@ -7,6 +7,7 @@ import {
   Grid
 } from 'semantic-ui-react'
 import '../App.css';
+import '../css/wonGame.css';
 
 class WonGame extends React.Component {
 
@@ -18,7 +19,7 @@ class WonGame extends React.Component {
             <Button animated
                     type='submit'
                     size="large"
-                    style={{ background: '##ffff', color: 'grey', right:'15px', position: 'absolute'}}
+                    className="logout-button"
                     >
                     <Button.Content visible> Logout</Button.Content>
                     <Button.Content hidden><Icon name='lock' /></Button.Content>
@@ -26,13 +27,13 @@ class WonGame extends React.Component {
           </Link>
           </header>
           <div className="half-padding-top">
-          <h1 style={{color:'white'}}>You Won! Here are your stats from this game:</h1>
+          <h1>You Won! Here are your stats from this game:</h1>
           <div className="half-padding-top">
           <Grid columns={1} divided>
 
             <Grid.Row>
             <Grid.Column>
-            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Score:</b> {this.props.location.state.score}</p>
+            <p><b>Score:</b> <span className="black-font">{this.props.location.state.score}</span></p>
             </Grid.Column>
             </Grid.Row>
 
@@ -43,7 +44,7 @@ class WonGame extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Time:</b> {this.props.location.state.time / 1000}</p>
+            <p><b>Time:</b> <span className="black-font">{this.props.location.state.time / 1000}</span></p>
             </Grid.Column>
             </Grid.Row>
 
@@ -54,7 +55,7 @@ class WonGame extends React.Component {
 
             <Grid.Row>
             <Grid.Column>
-            <p style={{color:'black', fontSize:'35px'}}><b style={{color:"white"}}>Instagram Account Used:</b> {this.props.location.state.instagram_account}</p>
+            <p><b>Instagram Account Used:</b> <span className="black-font">{this.props.location.state.instagram_account}</span></p>
             </Grid.Column>
             </Grid.Row>
 
@@ -68,7 +69,7 @@ class WonGame extends React.Component {
                 <Button animated
                         type='submit'
                         size="large"
-                        style={{ background: '##ffff', color: 'grey', position: 'relative', padding: '35px'}}
+                        className="new-game-button"
                         >
                         <Button.Content visible> Start New Game</Button.Content>
                         <Button.Content hidden><Icon name='play' /></Button.Content>

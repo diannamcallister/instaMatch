@@ -3,8 +3,8 @@ const config = require('../../config.js');
 const rp = require('request-promise');
 const instagram_url = config.instagram_url;
 
-async function getImagesFromInstagram(req, res) {
-    let url_info = await getURLsFromInstagram(req.params.account_name);
+async function get_images_from_instagram(req, res) {
+    let url_info = await get_URLs_from_Instagram(req.params.account_name);
     if (url_info.status !== 200) {
         return res.status(url_info.status).json({status: url_info.status, message: url_info.message});
     }
@@ -21,7 +21,7 @@ async function getImagesFromInstagram(req, res) {
     return res.status(200).json(position_urls);
 }
 
-async function getURLsFromInstagram(account_name) {
+async function get_URLs_from_Instagram(account_name) {
     console.log(`INSTAGRAM: get images for account: ${account_name}`);
     const url = `${instagram_url}/${account_name}/?__a=1`;
     return rp({
@@ -69,5 +69,5 @@ function shuffle(a) {
 }
 
 module.exports = {
-    getImagesFromInstagram : getImagesFromInstagram
+    get_images_from_instagram : get_images_from_instagram
 }

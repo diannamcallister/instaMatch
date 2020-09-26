@@ -1,0 +1,40 @@
+.App-height {
+    text-align: center;
+    background-image: url("../background.jpeg") !important;
+    background-repeat: repeat !important;
+    background-size: 100% 100%;
+    height: 100vh;
+}
+
+.button {
+    background: '##ffff';
+    color: grey;
+    right: 5px !important;
+    position: absolute !important;
+}
+
+.right-side-button {
+    position: absolute !important;
+}
+
+.username-form {
+    width: 300px;
+    margin-left: 40vw !important;
+}
+
+h3 {
+    color: white;
+}
+
+.stats-modal {
+    width: 90vmin;
+    height: 70vmin;
+    margin: auto;
+    outline: none;
+    padding-top: 100px;
+}
+
+.button-centered {
+    right: 0px !important;
+    position: relative !important;
+}

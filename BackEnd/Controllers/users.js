@@ -4,13 +4,13 @@ const rp = require('request-promise');
 const _ = require('lodash');
 const { QueryTypes } = require('sequelize');
 const db = require("../db-configs/db.index");
-const {db_createUser, db_getUserByUsername} = require('../dao/sql-queries');
+const {db_create_user, db_get_user_by_username} = require('../dao/sql-queries');
 
 
-async function createUser(req, res) {
+async function create_user(req, res) {
     let user = req.body;
 
-    let[valid_user, user_exists] = await Promise.all([checkValidUser(user), checkUserExists(user)]);
+    let[valid_user, user_exists] = await Promise.all([check_valid_user(user), check_user_exists(user)]);
     
     // check to see if there were issues for valid_user or userExists
     if (valid_user.status === 400) {
@@ -24,7 +24,7 @@ async function createUser(req, res) {
     }
 
     // the new user is able to be created; add user to database now
-    let new_user = await db_createUser(req.body.username, req.body.password, req.body.instagram_account);
+    let new_user = await db_create_user(req.body.username, req.body.password, req.body.instagram_account);
     if (new_user.status === 201) {
         return res.status(201).json(user);
     } else {
@@ -32,7 +32,7 @@ async function createUser(req, res) {
     }
 }
 
-async function checkValidUser(user) {
+async function check_valid_user(user) {
     // check to see if all necessary information has been inputted
     if (_.isEmpty(user)) {
         return {status: 400, message: "User information must be given"};
@@ -44,8 +44,8 @@ async function checkValidUser(user) {
     return {status: 200};
 }
 
-async function checkUserExists(user) {
-    let db_user = await db_getUserByUsername(user.username);
+async function check_user_exists(user) {
+    let db_user = await db_get_user_by_username(user.username);
     if (db_user.status === 200) {
         if (!_.isEmpty(db_user.data)) {
             return {status: 400, message: "Username must be unique"};
@@ -58,8 +58,8 @@ async function checkUserExists(user) {
     }
 }
 
-async function checkLogin(req, res) {
-    let user = await db_getUserByUsername(req.params.username);
+async function check_login(req, res) {
+    let user = await db_get_user_by_username(req.params.username);
     if (user.status === 200) {
         if (! _.isEmpty(user.data) && user.data.username === req.params.username && user.data.password === req.params.password) {
             return res.status(200).json(user.data);
@@ -75,6 +75,6 @@ async function checkLogin(req, res) {
 
 
 module.exports = {
-    createUser : createUser,
-    checkLogin: checkLogin
+    create_user : create_user,
+    check_login: check_login
 }

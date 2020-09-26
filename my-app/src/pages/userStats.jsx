@@ -19,8 +19,8 @@ class UserStats extends React.Component {
             <Button animated
                     type='submit'
                     size="large"
-                    style={{ background: 'white', color: 'grey', right:'375px', top:'115px', position: 'absolute'}}
-                    onClick={this.props.closeModal}
+                    className="exit-button"
+                    onClick={this.props.close_modal}
                     >
                     <Button.Content visible> X</Button.Content>
             </Button>

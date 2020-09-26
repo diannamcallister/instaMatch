@@ -8,134 +8,28 @@ import {
   Message
 } from 'semantic-ui-react'
 import '../App.css';
-import styles from '../App.css';
-import axios from 'axios';
+import {handle_login, handle_signup, on_input_change} from '../js_pages/entry.js';
 
 class Entry extends React.Component {
 
   constructor() {
     super();
-    this.handleLogin = this.handleLogin.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
+    this.handle_login = handle_login.bind(this);
+    this.on_input_change = on_input_change.bind(this);
+    this.handle_signup = handle_signup.bind(this);
     this.state = {
-      username:'',
-      password:'',
-      usernameError:false,
-      passwordError:false,
+      login_username:'',
+      login_password:'',
+      login_username_error:false,
+      login_password_error:false,
       signup_username:'',
       signup_password:'',
       instagram_account:'',
-      signupUsernameError:false,
-      signupPasswordError:false,
-      loginWorked:false,
-      signupWorked:false
+      signup_username_error:false,
+      signup_password_error:false,
+      login_worked:false,
+      signup_worked:false
     }
-  }
-
-  handleSignUp = (e) => {
-    e.preventDefault();
-
-    let user = {};
-
-    let error = false;
-    // check if one of the fields was not entered
-    if (this.state.signup_username === '') {
-      this.setState({signupUsernameError: true});
-      error = true;
-    } else {
-      this.setState({signupUsernameError: false});
-      user.username = this.state.signup_username;
-    }
-    if (this.state.signup_password === '') {
-      this.setState({signupPasswordError: true});
-      error = true;
-    } else {
-      this.setState({signupPasswordError: false});
-      user.password = this.state.signup_password;
-    }
-    if (error) {
-      this.setState({signupFormError: true});
-      return;
-    }
-
-    // if we got here, all fields have been entered; check if user creation works correctly.
-    user.instagram_account = this.state.instagram_account;
-    axios.post(`http://localhost:8081/user`, user)
-    .then(res => {
-      console.log("User Created");
-      this.setState({signupWorked: true});
-    })
-    .catch(error => {
-      if (error.response.data.status === 400) {
-        this.setState({signupFormError: true});
-        this.setState({signupFormErrorMsg: error.response.data.message});
-      } else {
-        this.setState({signupFormError: true});
-        this.setState({signupFormErrorMsg: "There was an issue trying to create an account for you. Please try again later!"});
-      }
-    });
-  }
-
-  handleLogin = (e) => {
-    e.preventDefault();
-
-    let error = false;
-    // check if one of the fields was not entered
-    if (this.state.username === '') {
-      this.setState({usernameError: true});
-      error = true;
-    } else {
-      this.setState({usernameError: false});
-    }
-    if (this.state.password === '') {
-      this.setState({passwordError: true});
-      error = true;
-    } else {
-      this.setState({passwordError: false});
-    }
-    if (error) {
-      this.setState({loginFormError: true});
-      return;
-    }
-    
-    // if we got here, all fields have been entered; check if user entry works correctly.
-    axios.get(`http://localhost:8081/user/${this.state.username}/${this.state.password}`)
-    .then(res => {
-      console.log("User Logged In");
-      this.setState({loginWorked: true});
-    })
-    .catch(error => {
-      this.setState({loginWorked: false});
-      if (error.response.data.status === 400) {
-        this.setState({loginFormError: true});
-        this.setState({loginFormErrorMsg: error.response.data.message});
-      } else {
-        this.setState({loginFormError: true});
-        this.setState({loginFormErrorMsg: "There was an issue trying to access your account. Please try again later!"});
-      }
-    });
-  }
-
-  onInputChange = (newValue, valueToChange) => {
-      if (valueToChange === "username") {
-        this.state.username = newValue.target.value;
-        this.setState({usernameError: false});
-        this.setState({loginFormError: false});
-      } else if (valueToChange === "password") {
-        this.state.password = newValue.target.value;
-        this.setState({passwordError: false});
-        this.setState({loginFormError: false});
-      } else if (valueToChange === "signup_username") {
-        this.state.signup_username = newValue.target.value;
-        this.setState({signupUsernameError: false});
-        this.setState({signupFormError: false});
-      } else if (valueToChange === "signup_password") {
-        this.state.signup_password = newValue.target.value;
-        this.setState({signupPasswordError: false});
-        this.setState({signupFormError: false});
-      } else if (valueToChange === "instagram_account") {
-        this.state.instagram_account = newValue.target.value;
-      }
   }
 
   render() {
@@ -145,16 +39,15 @@ class Entry extends React.Component {
         <div className="topPane paddingTop">
           <div className="small-header">Login</div>
           <Form 
-          style={{ width:"300px", marginLeft:"220px"}}
-          onSubmit={(event) => {this.handleLogin(event);} } 
-          error={this.state.loginFormError}>
-          {this.state.loginFormError
+          onSubmit={(event) => {this.handle_login(event);} } 
+          error={this.state.login_form_error}>
+          {this.state.login_form_error
           ?
           <Message
           error
           header="Username or Password was Incorrect."
-          content={this.state.loginFormErrorMsg}/> : null}
-          {this.state.loginWorked ? <Redirect push to={{pathname: "/setupGame", state: {username: this.state.username}}} /> : null}
+          content={this.state.login_form_error_msg}/> : null}
+          {this.state.login_worked ? <Redirect push to={{pathname: "/setupGame", state: {username: this.state.login_username}}} /> : null}
             <div className="bottomSpace">
             <Form.Input
                   type="text"
@@ -162,26 +55,25 @@ class Entry extends React.Component {
                   icon="user"
                   iconPosition="left"
                   placeholder="Username"
-                  onChange={(value) => {this.onInputChange(value, "username")}}
-                  error={this.state.usernameError}
+                  onChange={(value) => {this.on_input_change(value, "login_username")}}
+                  error={this.state.login_username_error}
             />
           </div>
           <div className="bottomSpace">
             <Form.Input
-                  tyle={{ width:"300px", paddingLeft : '300px', justifyContent : 'center', alignItems: 'center'}}
+                  // style={{ width:"300px", paddingLeft : '300px', justifyContent : 'center', alignItems: 'center'}}
                   type="password"
                   name="password"
                   icon="lock"
                   iconPosition="left"
                   placeholder="Password"
-                  onChange={(value) => {this.onInputChange(value, "password")}}
-                  error={this.state.passwordError}
+                  onChange={(value) => {this.on_input_change(value, "login_password")}}
+                  error={this.state.login_password_error}
             />
           </div>
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '##ffff', color: 'grey'}}
               >
               <Button.Content visible> Log In </Button.Content>
               <Button.Content hidden><Icon name='arrow right' /></Button.Content>
@@ -192,16 +84,15 @@ class Entry extends React.Component {
         <div className="bottomPane paddingTop">
           <div className="small-header">Sign Up</div>
           <Form 
-          style={{ width:"300px", marginLeft:"220px"}}
-          onSubmit={(event) => {this.handleSignUp(event);} } 
-          error={this.state.signupFormError}>
-          {this.state.signupFormError
+          onSubmit={(event) => {this.handle_signup(event);} } 
+          error={this.state.signup_form_error}>
+          {this.state.signup_form_error
           ?
           <Message
           error
           header="Unable to Create an Account."
-          content={this.state.signupFormErrorMsg}/> : null}
-          {this.state.signupWorked ? <Redirect push to={{pathname: "/setupGame", state: {username: this.state.signup_username}}} /> : null}
+          content={this.state.signup_form_error_msg}/> : null}
+          {this.state.signup_worked ? <Redirect push to={{pathname: "/setupGame", state: {username: this.state.signup_username}}} /> : null}
           <div className="bottomSpace">
             <Form.Input
                   type="text"
@@ -209,8 +100,8 @@ class Entry extends React.Component {
                   icon="user"
                   iconPosition="left"
                   placeholder="Username"
-                  onChange={(value) => {this.onInputChange(value, "signup_username")}}
-                  error={this.state.signupUsernameError}
+                  onChange={(value) => {this.on_input_change(value, "signup_username")}}
+                  error={this.state.signup_username_error}
             />
           </div>
           <div className="bottomSpace">
@@ -220,8 +111,8 @@ class Entry extends React.Component {
                   icon="lock"
                   iconPosition="left"
                   placeholder="Password"
-                  onChange={(value) => {this.onInputChange(value, "signup_password")}}
-                  error={this.state.signupPasswordError}
+                  onChange={(value) => {this.on_input_change(value, "signup_password")}}
+                  error={this.state.signup_password_error}
             />
           </div>
           <div className="bottomSpace">
@@ -231,13 +122,12 @@ class Entry extends React.Component {
                   icon="camera retro"
                   iconPosition="left"
                   placeholder="(Optional): Your Instagram Account"
-                  onChange={(value) => {this.onInputChange(value, "instagram_account")}}
+                  onChange={(value) => {this.on_input_change(value, "instagram_account")}}
             />
           </div>
           <Button animated
               type='submit'
               size="large"
-              style={{ background: '##ffff', color: 'grey'}}
               >
               <Button.Content visible> Sign Up </Button.Content>
               <Button.Content hidden><Icon name='arrow right' /></Button.Content>

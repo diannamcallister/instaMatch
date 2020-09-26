@@ -1,7 +1,7 @@
 const { QueryTypes } = require('sequelize');
 const db = require("../db-configs/db.index");
 
-async function db_createUser(username, password, instagram_account) {
+async function db_create_user(username, password, instagram_account) {
     return db.sequelize.query('INSERT INTO \`Users\` (username, password, instagram_account, createdAt, updatedAt) ' + 
     'VALUES (:username, :password, :instagram_account, :createdAt, :updatedAt)', {
         replacements: {username: username, password: password, instagram_account: instagram_account, 
@@ -18,7 +18,7 @@ async function db_createUser(username, password, instagram_account) {
       });
 }
 
-async function db_getUserByUsername(username) {
+async function db_get_user_by_username(username) {
     return db.sequelize.query('SELECT * FROM users WHERE username=(:username)', {
         replacements: {username: username},
         type: db.sequelize.QueryTypes.SELECT
@@ -32,7 +32,7 @@ async function db_getUserByUsername(username) {
       });
 }
 
-async function db_createLeaderboardEntry(username, score, time, instagram_account) {
+async function db_create_leaderboard_entry(username, score, time, instagram_account) {
     return db.sequelize.query(`INSERT INTO \`Leaderboards\` (username, score, time, instagram_account, createdAt, updatedAt) ` +
     `VALUES (:username, :score, :time, :instagram_account, :createdAt, :updatedAt)`, {
         replacements: {username: username, score: score, time: time, instagram_account: instagram_account,
@@ -49,7 +49,7 @@ async function db_createLeaderboardEntry(username, score, time, instagram_accoun
     })
 }
 
-async function db_getLeaderboardEntryByUsername(username) {
+async function db_get_leaderboard_entry_by_username(username) {
     return db.sequelize.query('SELECT * FROM leaderboards WHERE username=(:username)', {
         replacements: {username: username},
         type: db.sequelize.QueryTypes.SELECT
@@ -63,7 +63,7 @@ async function db_getLeaderboardEntryByUsername(username) {
       });
 }
 
-async function db_updateLeaderboardEntry(username, score, time, instagram_account) {
+async function db_update_leaderboard_entry(username, score, time, instagram_account) {
     return db.sequelize.query(`UPDATE \`Leaderboards\` SET username=:username, score=:score, time=:time,
      instagram_account=:instagram_account WHERE username=:username `, {
         replacements: {username: username, score: score, time: time, instagram_account: instagram_account},
@@ -80,9 +80,9 @@ async function db_updateLeaderboardEntry(username, score, time, instagram_accoun
 }
 
 module.exports = {
-    db_createUser : db_createUser,
-    db_getUserByUsername : db_getUserByUsername,
-    db_createLeaderboardEntry: db_createLeaderboardEntry,
-    db_getLeaderboardEntryByUsername: db_getLeaderboardEntryByUsername,
-    db_updateLeaderboardEntry: db_updateLeaderboardEntry
+    db_create_user : db_create_user,
+    db_get_user_by_username : db_get_user_by_username,
+    db_create_leaderboard_entry: db_create_leaderboard_entry,
+    db_get_leaderboard_entry_by_username: db_get_leaderboard_entry_by_username,
+    db_update_leaderboard_entry: db_update_leaderboard_entry
 }

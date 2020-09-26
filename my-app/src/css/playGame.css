@@ -1,0 +1,133 @@
+.App {
+    text-align: center;
+    background-image: url("../background.jpeg") !important;
+    background-repeat: repeat !important;
+    background-size: 100% 100%;
+}
+  
+  
+.button {
+    background: '##ffff';
+    color: grey;
+    right: 5px !important;
+    position: relative !important;
+}
+
+.pic-button {
+    background: white !important;
+}
+
+.hide-button {
+    right: 640px !important;
+}
+
+.right-side-button {
+    position: absolute !important;
+}
+
+.black-font {
+    color: black;
+}
+
+p {
+    font-size: 25px;
+    color: white;
+}
+  
+.form {
+    width: 300px;
+    margin-left: 220px;
+}
+
+.App-header {
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(20px + 5vmin);
+    color: #61dafb;
+}
+
+.help-modal {
+    width: 90vmin;
+    height: 100vmin;
+    margin: auto;
+    outline: none;
+    padding-top: 70px;
+}
+
+.small-header {
+    min-height: 20vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 5vmin);
+    color: white;
+}
+
+.App-link {
+color: #61dafb;
+}
+
+.middleLine {
+    border-left: 3px solid white;
+    height: 70vmin;
+    position: absolute;
+    left: 50%;
+    margin-left: -3px;
+    top: 20vmin;
+}
+
+.splitScreen {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+}
+
+.topPane {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.bottomPane {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.bottomSpace {
+    margin-bottom:10px;
+}
+
+.topSpace {
+    margin-bottom:50px;
+}
+
+.paddingTop {
+    margin-top: 120px;
+}
+
+.half-padding-top {
+    margin-top: 60px;
+}
+
+.info-left {
+    float:'left';
+    margin:'20px';
+}
+
+.photo {
+    height: 120px;
+    width: 90px;
+}
+
+
+.stats-modal {
+    width: 90vmin;
+    height: 70vmin;
+    margin: auto;
+    outline: none;
+    padding-top: 100px;
+}

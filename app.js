@@ -1,6 +1,6 @@
-const {getImagesFromInstagram} = require('./backend/controllers/instagram-endpoints');
-const {createUser, checkLogin} = require('./backend/controllers/users.js');
-const {getLeaderboardEntry, createOrUpdateLeaderboardEntry} = require('./backend/controllers/leaderboard.js');
+const {get_images_from_instagram} = require('./backend/controllers/instagram-endpoints');
+const {create_user, check_login} = require('./backend/controllers/users.js');
+const {get_leaderboard_entry, create_or_update_leaderboard_entry} = require('./backend/controllers/leaderboard.js');
 const config = require('./config.js');
 const port = config.port;
 
@@ -25,9 +25,9 @@ app.get('/user/:id', (req, res) => {
     return res.send('Received a GET HTTP method\n');
 });
 
-app.get('/user/:username/:password', (req, res) => checkLogin(req, res));
+app.get('/user/:username/:password', (req, res) => check_login(req, res));
 
-app.post('/user', (req, res) => createUser(req, res));
+app.post('/user', (req, res) => create_user(req, res));
 
 app.put('/', (req, res) => {
     return res.send('Received a PUT HTTP method\n');
@@ -40,7 +40,7 @@ app.delete('/', (req, res) => {
 /**
  * INSTAGRAM ENDPOINTS
  */
-app.get('/insta/:account_name', (req, res) => getImagesFromInstagram(req, res));
+app.get('/insta/:account_name', (req, res) => get_images_from_instagram(req, res));
 
 app.get('/insta/me', (req, res) => {
     // the user wants to use their own pics
@@ -52,9 +52,9 @@ app.get('/insta/me', (req, res) => {
  /**
  * LEADERBOARD ENDPOINTS
  */
-app.get('/leaderboard/:username', (req, res) => getLeaderboardEntry(req, res));
+app.get('/leaderboard/:username', (req, res) => get_leaderboard_entry(req, res));
 
-app.post('/leaderboard', (req, res) => createOrUpdateLeaderboardEntry(req, res));
+app.post('/leaderboard', (req, res) => create_or_update_leaderboard_entry(req, res));
 
 /**
  * GAME STATE ENDPOINTS - add these if want to allow the user to pause / come back to their game
@@ -73,18 +73,3 @@ db.sequelize.sync({ force: true }).then(() => {
 app.listen(port, () =>
 console.log(`Example app listening on port ${port}!\n`),
 );
-
-/**
- * DATABASE ACTIVATION
- */
-// const mysql = require('mysql');
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'user',
-//   password: 'password',
-//   database: 'database name'
-// });
-// connection.connect((err) => {
-//   if (err) throw err;
-//   console.log('Connected!');
-// });
