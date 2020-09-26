@@ -5,12 +5,11 @@ import {
   Button,
   Form,
   Icon,
-  Message, Grid
+  Message
 } from 'semantic-ui-react'
 import '../App.css';
 import styles from '../App.css';
 import axios from 'axios';
-import background from '../background.jpeg';
 
 class Entry extends React.Component {
 
@@ -155,7 +154,7 @@ class Entry extends React.Component {
           error
           header="Username or Password was Incorrect."
           content={this.state.loginFormErrorMsg}/> : null}
-          {this.state.loginWorked ? <Redirect push to={{pathname: "/game", state: {username: this.state.username}}} /> : null}
+          {this.state.loginWorked ? <Redirect push to={{pathname: "/setupGame", state: {username: this.state.username}}} /> : null}
             <div className="bottomSpace">
             <Form.Input
                   type="text"
@@ -202,7 +201,7 @@ class Entry extends React.Component {
           error
           header="Unable to Create an Account."
           content={this.state.signupFormErrorMsg}/> : null}
-          {this.state.signupWorked ? <Redirect push to={{pathname: "/game", state: {username: this.state.signup_username}}} /> : null}
+          {this.state.signupWorked ? <Redirect push to={{pathname: "/setupGame", state: {username: this.state.signup_username}}} /> : null}
           <div className="bottomSpace">
             <Form.Input
                   type="text"

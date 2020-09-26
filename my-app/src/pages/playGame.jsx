@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 import {
   Button,
-  Form,
   Icon,
-  Message,
   Grid,
   Image
 } from 'semantic-ui-react';
@@ -22,8 +20,7 @@ class PlayGame extends React.Component {
         this.cardsMatch = this.cardsMatch.bind(this);
         this.wonGame = this.wonGame.bind(this);
         this.closeModal = this.closeModal.bind(this);
-        // var back_card = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Question_Mark.svg/1200px-Question_Mark.svg.png";
-        var back_card = "https://cdn.freelogovectors.net/wp-content/uploads/2016/12/instagram-logo1.png";
+        let back_card = "https://cdn.freelogovectors.net/wp-content/uploads/2016/12/instagram-logo1.png";
         this.state = {
           modalIsOpen:false,
           image_urls: this.props.location.state.image_urls,
@@ -47,8 +44,8 @@ class PlayGame extends React.Component {
         let back_card = "https://cdn.freelogovectors.net/wp-content/uploads/2016/12/instagram-logo1.png";
 
         if (this.state.position_cards_up.length === 2) {
-            var position1 = this.state.position_cards_up[0];
-            var position2 = this.state.position_cards_up[1];
+            let position1 = this.state.position_cards_up[0];
+            let position2 = this.state.position_cards_up[1];
             if (this.state.image_urls[position1.row][position1.col] === this.state.image_urls[position2.row][position2.col]) {
                 // a pair has been found - need to mark them as found
                 let new_cur_pic = this.state.cur_pic;
@@ -83,7 +80,7 @@ class PlayGame extends React.Component {
     }
 
     wonGame() {
-        var leaderboard_stats = {
+        let leaderboard_stats = {
             username: this.props.location.state.username,
             score: this.state.num_cards_flipped, 
             time: new Date().getTime() - this.state.start_time,
@@ -112,7 +109,7 @@ class PlayGame extends React.Component {
                 row: row,
                 col: col
             };
-            var cards_up = this.state.position_cards_up;
+            let cards_up = this.state.position_cards_up;
             cards_up.push(position);
             this.setState({position_cards_up: cards_up});
 

@@ -1,16 +1,7 @@
-import React, { Text } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import React from 'react';
 import 'semantic-ui-css/semantic.min.css'
-import {
-  Button,
-  Form,
-  Icon,
-  Message,
-  Grid,
-  Image
-} from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
 import '../App.css';
-import axios from 'axios'
 
 class HelpInfo extends React.Component {
 

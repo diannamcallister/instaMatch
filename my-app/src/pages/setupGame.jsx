@@ -1,4 +1,4 @@
-import React, { View } from 'react';
+import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 import {
@@ -10,10 +10,10 @@ import {
 import '../App.css';
 import axios from 'axios';
 import Modal from 'react-modal';
-import UserDetails from './userDetails';
+import UserDetails from './userStats';
 
 
-class GameStart extends React.Component {
+class SetupGame extends React.Component {
 
   constructor() {
     super();
@@ -160,4 +160,4 @@ class GameStart extends React.Component {
   }
 };
 
-export default GameStart;
+export default SetupGame;

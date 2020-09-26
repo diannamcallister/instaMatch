@@ -38,7 +38,7 @@ async function getURLsFromInstagram(account_name) {
             return {status:400, message: `the account requested only has ${imgCount} images when the game needs ${config.num_imgs}`};
         }
         let urls = [];
-        for (var i = 0; i < config.num_imgs; i++) {
+        for (let i = 0; i < config.num_imgs; i++) {
             let url_name = data.graphql.user.edge_owner_to_timeline_media.edges[i].node.display_url;
             console.log(`image #${i}, URL=${url_name}`);
             urls.push(url_name); 
@@ -56,8 +56,9 @@ async function getURLsFromInstagram(account_name) {
     });
 }
 
+/* Taken from: https://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array */
 function shuffle(a) {
-    var j, x, i;
+    let j, x, i;
     for (i = a.length - 1; i > 0; i--) {
         j = Math.floor(Math.random() * (i + 1));
         x = a[i];

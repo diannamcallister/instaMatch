@@ -10,25 +10,25 @@ const {db_createUser, db_getUserByUsername} = require('../dao/sql-queries');
 async function createUser(req, res) {
     let user = req.body;
 
-    let[validUser, userExists] = await Promise.all([checkValidUser(user), checkUserExists(user)]);
+    let[valid_user, user_exists] = await Promise.all([checkValidUser(user), checkUserExists(user)]);
     
-    // check to see if there were issues for validUser or userExists
-    if (validUser.status === 400) {
-        return res.status(400).json({status: 400, message: validUser.message});
-    } else if (validUser.status == 500) {
-        return res.status(500).json({status: 500, message: validUser.message});
-    } else if (userExists.status === 400) {
-        return res.status(400).json({status: 400, message: userExists.message});
-    } else if (userExists.status === 500) {
-        return res.status(500).json({status: 500, message: userExists.message});
+    // check to see if there were issues for valid_user or userExists
+    if (valid_user.status === 400) {
+        return res.status(400).json({status: 400, message: valid_user.message});
+    } else if (valid_user.status == 500) {
+        return res.status(500).json({status: 500, message: valid_user.message});
+    } else if (user_exists.status === 400) {
+        return res.status(400).json({status: 400, message: user_exists.message});
+    } else if (user_exists.status === 500) {
+        return res.status(500).json({status: 500, message: user_exists.message});
     }
 
     // the new user is able to be created; add user to database now
-    let newUser = await db_createUser(req.body.username, req.body.password, req.body.instagram_account);
-    if (newUser.status === 201) {
+    let new_user = await db_createUser(req.body.username, req.body.password, req.body.instagram_account);
+    if (new_user.status === 201) {
         return res.status(201).json(user);
     } else {
-        return res.status(newUser.status).json({status: newUser.status, message: newUser.message});
+        return res.status(new_user.status).json({status: new_user.status, message: new_user.message});
     }
 }
 

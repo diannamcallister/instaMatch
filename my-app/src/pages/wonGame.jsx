@@ -1,16 +1,12 @@
-import React, { useEffect } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 import {
   Button,
-  Form,
   Icon,
-  Message,
-  Grid,
-  Image
+  Grid
 } from 'semantic-ui-react'
 import '../App.css';
-import axios from 'axios'
 
 class WonGame extends React.Component {
 
@@ -68,7 +64,7 @@ class WonGame extends React.Component {
             </Grid.Row>
           </Grid>
           <div className="topSpace" style={{paddingTop:'100px'}}>
-            <Link to={{pathname:"/game", state: {username: this.props.location.state.username}}}>
+            <Link to={{pathname:"/setupGame", state: {username: this.props.location.state.username}}}>
                 <Button animated
                         type='submit'
                         size="large"

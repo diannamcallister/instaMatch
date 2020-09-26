@@ -8,43 +8,42 @@ const {db_createLeaderboardEntry, db_getLeaderboardEntryByUsername, db_updateLea
 
 async function getLeaderboardEntry(req, res) {
     let username = req.params.username;
-    let leaderboardEntry = await db_getLeaderboardEntryByUsername(username);
-    // TODO: might need to do a check here to see if the user already has a leaderboard entry, and if not, what to do
-    if (leaderboardEntry.status === 200) {
-        return res.status(200).json(leaderboardEntry);
+    let leaderboard_entry = await db_getLeaderboardEntryByUsername(username);
+    if (leaderboard_entry.status === 200) {
+        return res.status(200).json(leaderboard_entry);
     } else {
-        return res.status(leaderboardEntry.status).json({status: leaderboardEntry.status, message: leaderboardEntry.message});
+        return res.status(leaderboard_entry.status).json({status: leaderboard_entry.status, message: leaderboard_entry.message});
     }
 }
 
 async function createOrUpdateLeaderboardEntry(req, res) {
-    let leaderboardEntry = req.body;
-    let db_leaderboardEntry = await db_getLeaderboardEntryByUsername(leaderboardEntry.username);
-    if (db_leaderboardEntry.status === 200 && _.isEmpty(db_leaderboardEntry.leaderboard_entry)) {
+    let leaderboard_entry = req.body;
+    let db_leaderboard_entry = await db_getLeaderboardEntryByUsername(leaderboard_entry.username);
+    if (db_leaderboard_entry.status === 200 && _.isEmpty(db_leaderboard_entry.leaderboard_entry)) {
         // the user has no entires in the leaderboard - create one:
-        let res_leaderboardEntry = await db_createLeaderboardEntry(leaderboardEntry.username, leaderboardEntry.score, 
-            leaderboardEntry.time, leaderboardEntry.instagram_account);
-        return res.status(201).json(leaderboardEntry);
-    } else if (db_leaderboardEntry.status === 200 && !_.isEmpty(db_leaderboardEntry.leaderboard_entry)) {
+        let res_leaderboard_entry = await db_createLeaderboardEntry(leaderboard_entry.username, leaderboard_entry.score, 
+            leaderboard_entry.time, leaderboard_entry.instagram_account);
+        return res.status(201).json(leaderboard_entry);
+    } else if (db_leaderboard_entry.status === 200 && !_.isEmpty(db_leaderboard_entry.leaderboard_entry)) {
         // the user already has an entry in the leaderboard
         //      update the entry if the new score is better than (meaning LOWER) or equal to the old one
-        if (db_leaderboardEntry.leaderboard_entry.score >= leaderboardEntry.score) {
+        if (db_leaderboard_entry.leaderboard_entry.score >= leaderboard_entry.score) {
             // the new score is better than the old one - update the score
-            let res_leaderboardEntry = await db_updateLeaderboardEntry(leaderboardEntry.username, leaderboardEntry.score, 
-                leaderboardEntry.time, leaderboardEntry.instagram_account);
-            return res.status(200).json(leaderboardEntry);
+            let res_leaderboard_entry = await db_updateLeaderboardEntry(leaderboard_entry.username, leaderboard_entry.score, 
+                leaderboard_entry.time, leaderboard_entry.instagram_account);
+            return res.status(200).json(leaderboard_entry);
         } else {
             // score of old entry in leaderboard is better - keep leaderboard entry as is
-            let highest_leaderboardEntry = {
-                username: db_leaderboardEntry.leaderboard_entry.username,
-                score: db_leaderboardEntry.leaderboard_entry.score,
-                time: db_leaderboardEntry.leaderboard_entry.time,
-                instagram_account: db_leaderboardEntry.leaderboard_entry.instagram_account
+            let highest_leaderboard_entry = {
+                username: db_leaderboard_entry.leaderboard_entry.username,
+                score: db_leaderboard_entry.leaderboard_entry.score,
+                time: db_leaderboard_entry.leaderboard_entry.time,
+                instagram_account: db_leaderboard_entry.leaderboard_entry.instagram_account
             }
-            return res.status(200).json(highest_leaderboardEntry);
+            return res.status(200).json(highest_leaderboard_entry);
         }
     } else {
-        return res.status(db_leaderboardEntry.status).json({status: db_leaderboardEntry.status, message: db_leaderboardEntry.message});
+        return res.status(db_leaderboard_entry.status).json({status: db_leaderboard_entry.status, message: db_leaderboard_entry.message});
     }
 }
 

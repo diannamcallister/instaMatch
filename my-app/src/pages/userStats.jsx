@@ -1,18 +1,12 @@
-import React, { Text } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import React from 'react';
 import 'semantic-ui-css/semantic.min.css'
 import {
   Button,
-  Form,
-  Icon,
-  Message,
-  Grid,
-  Image
+  Grid
 } from 'semantic-ui-react'
 import '../App.css';
-import axios from 'axios'
 
-class UserDetails extends React.Component {
+class UserStats extends React.Component {
 
     constructor(props) {
         super(props);
@@ -86,4 +80,4 @@ class UserDetails extends React.Component {
     };
 }
 
-export default UserDetails;
+export default UserStats;
