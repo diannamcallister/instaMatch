@@ -1,7 +1,7 @@
-const {get_images_from_instagram} = require('./backend/controllers/instagram-endpoints');
-const {create_user, check_login} = require('./backend/controllers/users.js');
-const {get_leaderboard_entry, create_or_update_leaderboard_entry} = require('./backend/controllers/leaderboard.js');
-const config = require('./config.js');
+const {get_images_from_instagram} = require('./controllers/instagram-endpoints');
+const {create_user, check_login} = require('./controllers/users.js');
+const {get_leaderboard_entry, create_or_update_leaderboard_entry} = require('./controllers/leaderboard.js');
+const config = require('../config.js');
 const port = config.port;
 
 // import express from 'express';
@@ -63,7 +63,7 @@ app.post('/leaderboard', (req, res) => create_or_update_leaderboard_entry(req, r
 /**
  * Database Connection
  */
-const db = require("./backend/db-configs/db.index");
+const db = require("./db-configs/db.index");
 db.sequelize.sync({ force: true }).then(() => {
     console.log("Drop and re-sync db.\n");
 });
