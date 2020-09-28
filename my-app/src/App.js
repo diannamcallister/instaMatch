@@ -3,11 +3,11 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
 
 // Pages
-import SetupGame from "./pages/setupGame";
-import Entry from "./pages/entry";
-import UserStats from "./pages/userStats";
-import PlayGame from "./pages/playGame";
-import WonGame from "./pages/wonGame";
+import SetupGame from "./react_pages/setupGame";
+import Entry from "./react_pages/entry";
+import UserStats from "./react_pages/userStats";
+import PlayGame from "./react_pages/playGame";
+import WonGame from "./react_pages/wonGame";
 
 class App extends Component {
   render() {
