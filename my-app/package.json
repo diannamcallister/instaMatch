@@ -13,7 +13,7 @@
     "react-modal": "^3.11.2",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
+    "react-scripts": "5.0.1",
     "react-x-button": "0.0.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^1.2.1"
